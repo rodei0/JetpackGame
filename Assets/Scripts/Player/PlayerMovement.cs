@@ -6,7 +6,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float flyingPower;
 
     private Rigidbody2D rb;
-    private bool isFlying;
+    public bool isFlying;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
@@ -16,8 +16,9 @@ public class PlayerMovement : MonoBehaviour
     }
     void Start()
     {
-        
+      
     }
+
 
     // Update is called once per frame
     void Update()
@@ -41,6 +42,15 @@ public class PlayerMovement : MonoBehaviour
     private void FlyMovement()
     {
         rb.AddForce(new Vector2(0, flyingPower), ForceMode2D.Force);
+    }
+
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Obstacle"))
+        {
+            Debug.Log("Player hit an obstacle!");
+        }
     }
 
 }

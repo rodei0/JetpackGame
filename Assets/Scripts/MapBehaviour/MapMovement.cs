@@ -13,7 +13,7 @@ public class MapMovement : MonoBehaviour
     [SerializeField] private Transform floor2;
     [SerializeField] private Transform parentFloor;
 
-    
+
     void Start()
     {
         SpriteRenderer sr = bg1.GetComponent<SpriteRenderer>();
@@ -69,4 +69,5 @@ public class MapMovement : MonoBehaviour
         }
         return totalWidth;
     }
+
 }
