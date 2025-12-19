@@ -9,6 +9,7 @@ public class SpawnerController : MonoBehaviour
     [SerializeField] private GameObject obstacleMissilePrefab;
     [SerializeField] private GameObject obstacleLaserPrefab;
     [SerializeField] private GameObject obstacleAvisoPrefab;
+    [SerializeField] private GameObject obstacleVerticalLaserPrefab;
 
     [SerializeField] private Transform[] spawnPoints;
     [SerializeField] private Transform[] spawnPointsMissile;
@@ -48,6 +49,11 @@ public class SpawnerController : MonoBehaviour
 
     }
 
+    void SpawnVerticalLaser()
+    {
+        Instantiate(obstacleVerticalLaserPrefab, new Vector3(15, 0, 0), Quaternion.identity);
+    }
+
     private IEnumerator spawnLaser()
     {
 
@@ -78,7 +84,8 @@ public class SpawnerController : MonoBehaviour
         {
             SpawnMissile();
             SpawnPrefab();
-            
+            SpawnVerticalLaser();
+
             timer = 0f;
         }
     } 

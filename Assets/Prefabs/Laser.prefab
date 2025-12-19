@@ -199,7 +199,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -14.05, y: 0}
+  m_Offset: {x: -17.73, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 1, y: 0.5}
@@ -226,4 +226,5 @@ MonoBehaviour:
   laserLight: {fileID: 0}
   srLaser: {fileID: 0}
   laserCollider: {fileID: 0}
-  colliderGrowth: 0.55
+  colliderGrowth: 10
+  animator: {fileID: 0}

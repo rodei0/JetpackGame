@@ -9,16 +9,19 @@ public class LaserController : MonoBehaviour
     [SerializeField] private SpriteRenderer srLaser;
     [SerializeField] private BoxCollider2D laserCollider;
     [SerializeField] private float colliderGrowth = 0.3f;
+    [SerializeField] private Animator animator;
 
     void Start()
     {
         laserLight = GetComponent<Light2D>();
         srLaser = GetComponent<SpriteRenderer>();
         laserCollider = GetComponent<BoxCollider2D>();
+        animator = GetComponent<Animator>();
 
         laserLight.enabled = false;
         srLaser.enabled = false;
         laserCollider.enabled = false;
+        
 
         StartCoroutine(WaitForLaser());
 
@@ -36,26 +39,27 @@ public class LaserController : MonoBehaviour
         laserLight.enabled = true;
         srLaser.enabled = true;
         laserCollider.enabled = true;
+        animator.SetBool("laser", true);
         for (int i = 0; i < 25; i++)
         {
             laserLight.pointLightOuterRadius += 1.2f;
 
-            laserCollider.size = new Vector2(laserCollider.size.x + colliderGrowth, laserCollider.size.y);
-
             yield return new WaitForSeconds(0.01f);
         }
+        laserCollider.size = new Vector2(laserCollider.size.x + colliderGrowth, laserCollider.size.y);
         for (int i = 0; i < 50; i++)
         {
             laserLight.pointLightOuterRadius -= 0.4f;
             Color color = srLaser.color;
             color.a -= 1f / 30f; // Reduce alpha gradualmente
             srLaser.color = color;
+            if (i == 30) { laserCollider.enabled = false; }
             if (laserLight.intensity >= 0) { laserLight.intensity -= 1f / 10f; }
             yield return new WaitForSeconds(0.02f);
         }
         laserLight.enabled = false;
         srLaser.enabled = false;
-        laserCollider.enabled = false;
+        
         yield return new WaitForSeconds(0.1f);
         Destroy(this.gameObject);
     }
