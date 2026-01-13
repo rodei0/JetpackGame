@@ -77,7 +77,7 @@ GameObject:
   - component: {fileID: 2820295190775484753}
   m_Layer: 0
   m_Name: laserUp
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -268,7 +268,7 @@ GameObject:
   - component: {fileID: 7287007115603613616}
   m_Layer: 0
   m_Name: laserDown
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

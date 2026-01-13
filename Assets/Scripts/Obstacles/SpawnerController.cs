@@ -4,26 +4,38 @@ using UnityEngine;
 
 public class SpawnerController : MonoBehaviour
 {
-    private int ObstacleToSpawn;
+
+    [Header("Obstacle Prefabs")]
     [SerializeField] private GameObject[] obstacleAsteroidPrefab;
     [SerializeField] private GameObject obstacleMissilePrefab;
     [SerializeField] private GameObject obstacleLaserPrefab;
     [SerializeField] private GameObject obstacleAvisoPrefab;
     [SerializeField] private GameObject obstacleVerticalLaserPrefab;
 
+    [Header("Spawn Points")]
     [SerializeField] private Transform[] spawnPoints;
     [SerializeField] private Transform[] spawnPointsMissile;
     [SerializeField] private Transform[] spawnPointsLaser;
 
-    [SerializeField] private float spawnInterval = 2f;
-    [SerializeField] private float waitforLaser = 2f;
+    [Header("Spawn Timing")]
+    [SerializeField] private float spawnInterval = 8f;
     private float timer;
+
+
+
+    [Header("Stats")]
+    [SerializeField] private float waitforLaser = 2f;
     [HideInInspector] public int asteroidsSpawned;
+    [HideInInspector] private bool isDecided;
+    [SerializeField] int howManyAsteroids;
+    [SerializeField] int howManyMissile;
+    [SerializeField] int howManyLaser;
+    [SerializeField] int howManyVerticalLaser;
 
 
     void Start()
     {
-        StartCoroutine(spawnLaser());
+        
     }
 
     // Update is called once per frame
@@ -34,7 +46,7 @@ public class SpawnerController : MonoBehaviour
 
     }
 
-    void SpawnPrefab()
+    private void SpawnAsteroids()
     {
         int prefabIndex = Random.Range(0, obstacleAsteroidPrefab.Length);
         int spawnPointIndexAsteroid = Random.Range(0, spawnPoints.Length);
@@ -42,14 +54,14 @@ public class SpawnerController : MonoBehaviour
         asteroidsSpawned++;
     }
 
-    void SpawnMissile()
+    private void SpawnMissile()
     {
         int spawnPointIndexMissile = Random.Range(0, spawnPointsMissile.Length);
         Instantiate(obstacleMissilePrefab, spawnPointsMissile[spawnPointIndexMissile].position, Quaternion.identity);
 
     }
 
-    void SpawnVerticalLaser()
+    private void SpawnVerticalLaser()
     {
         Instantiate(obstacleVerticalLaserPrefab, new Vector3(15, 0, 0), Quaternion.identity);
     }
@@ -78,15 +90,81 @@ public class SpawnerController : MonoBehaviour
             Instantiate(obstacleLaserPrefab, new Vector3(spawnPointsLaser[position].position.x + 1, spawnPointsLaser[position].position.y), Quaternion.identity);
         }
     }
-    void SpawnInterval()
+    private void SpawnInterval()
         {
-        if (timer >= spawnInterval)
+        if (timer >= spawnInterval && !isDecided)
+        {
+            timer = 0f;
+            DecideWhichObstacleSpawns(); 
+        } else
+        {
+
+        }
+    }
+
+    private void DecideWhichObstacleSpawns()
+    {
+        int randomObstacle = Random.Range(0, 4);
+        Debug.Log("randomObstacle: " + randomObstacle);
+        switch (randomObstacle)
+        {
+
+            case 0:
+                StartCoroutine(SpawnAsteroidsRoutine());
+                break;
+            case 1:
+                StartCoroutine(SpawnMissileRoutine());
+                break;
+            case 2:
+                StartCoroutine(SpawnLaserRoutine());
+                break;
+            case 3:
+                StartCoroutine(SpawnVerticalLaserRoutine());
+                break;
+        }
+    }
+
+    private IEnumerator SpawnAsteroidsRoutine()
+    {
+        isDecided = true;
+        for (int i = 0; i < howManyAsteroids; i++)
+        {
+            SpawnAsteroids();
+            yield return new WaitForSeconds(3f);
+        }
+        isDecided = false;
+    }
+
+    private IEnumerator SpawnMissileRoutine()
+    {
+        isDecided = true;
+        for (int i = 0; i < howManyMissile; i++)
         {
             SpawnMissile();
-            SpawnPrefab();
-            SpawnVerticalLaser();
-
-            timer = 0f;
+            yield return new WaitForSeconds(3f);
         }
-    } 
+        isDecided = false;
+    }
+
+    private IEnumerator SpawnLaserRoutine()
+    {
+        isDecided = true;
+        for (int i = 0; i < howManyLaser; i++)
+        {
+            StartCoroutine(spawnLaser());
+            yield return new WaitForSeconds(3f);
+        }
+        isDecided = false;
+    }
+
+    private IEnumerator SpawnVerticalLaserRoutine()
+    {
+        isDecided = true;
+        for (int i = 0; i < howManyVerticalLaser; i++)
+        {
+            SpawnVerticalLaser();
+            yield return new WaitForSeconds(2f);
+        }
+        isDecided = false;
+    }
 }
