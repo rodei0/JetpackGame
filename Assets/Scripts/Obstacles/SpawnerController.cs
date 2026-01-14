@@ -96,9 +96,6 @@ public class SpawnerController : MonoBehaviour
         {
             timer = 0f;
             DecideWhichObstacleSpawns(); 
-        } else
-        {
-
         }
     }
 
@@ -110,13 +107,37 @@ public class SpawnerController : MonoBehaviour
         {
 
             case 0:
-                StartCoroutine(SpawnAsteroidsRoutine());
+                if (GameManager.Instance.score >= 1000)
+                {
+                    StartCoroutine(SpawnMissileRoutine());
+                    StartCoroutine(SpawnAsteroidsRoutine());
+                }
+                else
+                {
+                    StartCoroutine(SpawnAsteroidsRoutine());
+                }
                 break;
             case 1:
-                StartCoroutine(SpawnMissileRoutine());
+                if (GameManager.Instance.score >= 1000)
+                {
+                    StartCoroutine(SpawnAsteroidsRoutine());
+                    StartCoroutine(SpawnMissileRoutine());
+                }
+                else
+                {
+                    StartCoroutine(SpawnMissileRoutine());
+                }
                 break;
             case 2:
-                StartCoroutine(SpawnLaserRoutine());
+                if (GameManager.Instance.score >= 1000)
+                {
+                    StartCoroutine(SpawnMissileRoutine());
+                    StartCoroutine(SpawnLaserRoutine());
+                } 
+                else
+                {
+                    StartCoroutine(SpawnLaserRoutine());
+                }
                 break;
             case 3:
                 StartCoroutine(SpawnVerticalLaserRoutine());
@@ -124,13 +145,15 @@ public class SpawnerController : MonoBehaviour
         }
     }
 
+  
+
     private IEnumerator SpawnAsteroidsRoutine()
     {
         isDecided = true;
         for (int i = 0; i < howManyAsteroids; i++)
         {
             SpawnAsteroids();
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(2f);
         }
         isDecided = false;
     }
@@ -141,7 +164,7 @@ public class SpawnerController : MonoBehaviour
         for (int i = 0; i < howManyMissile; i++)
         {
             SpawnMissile();
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(2f);
         }
         isDecided = false;
     }
@@ -152,7 +175,7 @@ public class SpawnerController : MonoBehaviour
         for (int i = 0; i < howManyLaser; i++)
         {
             StartCoroutine(spawnLaser());
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(4f);
         }
         isDecided = false;
     }

@@ -27,7 +27,7 @@ public class AsteroidsMovement : MonoBehaviour
     void Movement()
     {
         //para añadir velocidad global multiplicar speed por la variable global(no creada)
-        transform.position += Vector3.left * speed * Time.deltaTime;
+        transform.position += Vector3.left * (speed + GameManager.Instance.velocidadActual) * Time.deltaTime;
     }
 
     void DestroyItself()

@@ -13,7 +13,7 @@ public class MissileMovement : MonoBehaviour
 
     private void MovementMissile()
     {
-               transform.Translate(Vector2.left * speed * Time.deltaTime);
+               transform.Translate(Vector2.left * (speed + GameManager.Instance.velocidadActual) * Time.deltaTime);
     }
 
     private void DestroyItself()

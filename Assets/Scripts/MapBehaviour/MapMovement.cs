@@ -30,8 +30,8 @@ public class MapMovement : MonoBehaviour
 
     void BackgroundMovement()
     {
-        bg1.position += Vector3.left * speed * Time.deltaTime;
-        bg2.position += Vector3.left * speed * Time.deltaTime;
+        bg1.position += Vector3.left * (speed + GameManager.Instance.velocidadActual) * Time.deltaTime;
+        bg2.position += Vector3.left * (speed + GameManager.Instance.velocidadActual) * Time.deltaTime;
         if (bg1.position.x <= -width)
         {
             bg1.position = new Vector2(bg2.position.x + width, bg1.position.y);
@@ -45,8 +45,8 @@ public class MapMovement : MonoBehaviour
     void FloorMovement()
     {
         
-        floor1.position += Vector3.left * speed * Time.deltaTime;
-        floor2.position += Vector3.left * speed * Time.deltaTime;
+        floor1.position += Vector3.left * (speed + GameManager.Instance.velocidadActual) * Time.deltaTime;
+        floor2.position += Vector3.left * (speed + GameManager.Instance.velocidadActual) * Time.deltaTime;
         if (floor1.position.x <= -widthFloor)
         {
             floor1.position = new Vector2(floor2.position.x + widthFloor, floor1.position.y);
