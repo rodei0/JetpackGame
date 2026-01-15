@@ -50,7 +50,18 @@ public class PlayerMovement : MonoBehaviour
         if (collision.gameObject.CompareTag("Obstacle"))
         {
             Debug.Log("Player hit an obstacle!");
+            GameManager.Instance.OnPlayerDead();
         }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Coin"))
+        {
+            GameManager.Instance.AddCoin();
+            Destroy(collision.gameObject);
+        }
+
     }
 
 }
