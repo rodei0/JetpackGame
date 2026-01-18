@@ -3,16 +3,12 @@ using UnityEngine;
 public class CoinMovement : MonoBehaviour
 {
 
-    void Start()
-    {
-        
-    }
-
     // Update is called once per frame
     void Update()
     {
         OscileUpAndDown();
         rotateYConstantly();
+        
     }
 
     void OscileUpAndDown() 
@@ -24,5 +20,7 @@ public class CoinMovement : MonoBehaviour
     {
         this.transform.Rotate(new Vector3(0, 80 * Time.deltaTime, 0));
     }
+
+
 
 }

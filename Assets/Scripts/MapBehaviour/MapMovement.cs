@@ -3,11 +3,19 @@ using UnityEngine;
 public class MapMovement : MonoBehaviour
 {
     [SerializeField] private float speed;
+    [SerializeField] private float parallaxSpeed3;
+    [SerializeField] private float parallaxSpeed2;
+    [SerializeField] private float parallaxSpeed1;
 
     private float width;
     float widthFloor;
-    [SerializeField] private Transform bg1;
-    [SerializeField] private Transform bg2;
+    [SerializeField] private Transform bg3_L;
+    [SerializeField] private Transform bg2_L;
+    [SerializeField] private Transform bg1_L;
+    [SerializeField] private Transform bg3_R;
+    [SerializeField] private Transform bg2_R;
+    [SerializeField] private Transform bg1_R;
+
 
     [SerializeField] private Transform floor1;
     [SerializeField] private Transform floor2;
@@ -16,7 +24,7 @@ public class MapMovement : MonoBehaviour
 
     void Start()
     {
-        SpriteRenderer sr = bg1.GetComponent<SpriteRenderer>();
+        SpriteRenderer sr = bg3_L.GetComponent<SpriteRenderer>();
         width = sr.bounds.size.x;
         widthFloor = calculateWidthFloor(parentFloor);
     }
@@ -24,14 +32,16 @@ public class MapMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        BackgroundMovement();
+        BackgroundMovement(bg3_L, bg3_R, parallaxSpeed3);
+        BackgroundMovement(bg2_L, bg2_R, parallaxSpeed2);
+        BackgroundMovement(bg1_L, bg1_R, parallaxSpeed1);
         FloorMovement();
     }
 
-    void BackgroundMovement()
+    void BackgroundMovement(Transform bg1, Transform bg2, float parallax)
     {
-        bg1.position += Vector3.left * (speed + GameManager.Instance.velocidadActual) * Time.deltaTime;
-        bg2.position += Vector3.left * (speed + GameManager.Instance.velocidadActual) * Time.deltaTime;
+        bg1.position += Vector3.left * (speed + GameManager.Instance.velocidadActual) * parallax * Time.deltaTime;
+        bg2.position += Vector3.left * (speed + GameManager.Instance.velocidadActual) * parallax * Time.deltaTime;
         if (bg1.position.x <= -width)
         {
             bg1.position = new Vector2(bg2.position.x + width, bg1.position.y);
@@ -41,6 +51,8 @@ public class MapMovement : MonoBehaviour
             bg2.position = new Vector2(bg1.position.x + width, bg2.position.y);
         }
     }
+
+
 
     void FloorMovement()
     {

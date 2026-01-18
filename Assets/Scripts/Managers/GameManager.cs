@@ -92,7 +92,7 @@ public class GameManager : MonoBehaviour
             DataManager.Instance.SaveData();
         }
 
-        //mostrar aqui panel de game over
+        MenuManager.Instance.ShowDeathMenu();
 
         Time.timeScale = 0f; // Pausar el juego
 

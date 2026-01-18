@@ -17,9 +17,15 @@ public class CoinsSpawner : MonoBehaviour
         float randomDelay = Random.Range(1.5f, 3f);
         yield return new WaitForSeconds(randomDelay);
         int randomIndex = Random.Range(0, coinPositions.Count);
-        Instantiate(coinPrefab, coinPositions[randomIndex].position, Quaternion.identity);
+        Vector3 spawnPosition = coinPositions[randomIndex].position;
+        if (Physics2D.OverlapCircle(spawnPosition, 0.1f) != null)
+        {
+            spawnPosition.x += 2f;
+        }
+        Instantiate(coinPrefab, spawnPosition, Quaternion.identity);
         StartCoroutine(SpawnCoins());
     }
+
 
 
 }

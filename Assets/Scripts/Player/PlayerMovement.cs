@@ -14,16 +14,13 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
     }
-    void Start()
-    {
-      
-    }
 
 
     // Update is called once per frame
     void Update()
     {
         isFlying = Input.GetKey(KeyCode.Space);
+        PauseGame();
     }
 
     private void FixedUpdate()
@@ -44,6 +41,16 @@ public class PlayerMovement : MonoBehaviour
         rb.AddForce(new Vector2(0, flyingPower), ForceMode2D.Force);
     }
 
+    private void PauseGame()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape) && !MenuManager.Instance.isPaused)
+        {
+        MenuManager.Instance.ShowPauseMenu();   
+        } else if (Input.GetKeyDown(KeyCode.Escape) && MenuManager.Instance.isPaused)
+        {
+        MenuManager.Instance.Resume();
+        }
+    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -61,7 +68,6 @@ public class PlayerMovement : MonoBehaviour
             GameManager.Instance.AddCoin();
             Destroy(collision.gameObject);
         }
-
     }
 
 }
