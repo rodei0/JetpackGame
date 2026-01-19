@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
 
     private Rigidbody2D rb;
     public bool isFlying;
+    public bool isDead;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 

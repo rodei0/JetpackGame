@@ -5,9 +5,12 @@ public class PlayerAnimator : MonoBehaviour
     private Animator animator;
     [SerializeField] private Transform groundDetect;
     private PlayerMovement pMovement;
+    private SpriteRenderer spriteRenderer;
     void Start()
     {
+        spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
+        //ApplySkin();
         pMovement = GetComponent<PlayerMovement>();
     }
 
@@ -37,6 +40,19 @@ public class PlayerAnimator : MonoBehaviour
         } else { 
             animator.SetBool("isFlyingUp", false);
             animator.SetBool("isFlyingDown", true);
+        }
+    }
+
+    private void ApplySkin()
+    {
+        Skin currentSkin = SkinManager.Instance.GetCurentSkin();
+        if (currentSkin != null)
+        {
+            if (currentSkin.animatorController != null)
+            {
+                animator.runtimeAnimatorController = currentSkin.animatorController;
+            }
+            spriteRenderer.sprite = currentSkin.skinSprite;
         }
     }
 }

@@ -3,11 +3,11 @@ using UnityEngine.Rendering.Universal;
 
 public class LightOscile : MonoBehaviour
 {
-    private Light2D light;
+    private Light2D light1;
     [SerializeField] private float oscillationSpeed = 2f;
     void Start()
     {
-        light = GetComponent<Light2D>();
+        light1 = GetComponent<Light2D>();
 
     }
 
@@ -19,6 +19,6 @@ public class LightOscile : MonoBehaviour
 
     void OscileLightFalloff()
     {
-        light.falloffIntensity = 0.95f + Mathf.Sin(Time.time * oscillationSpeed) * 0.15f;
+        light1.falloffIntensity = 0.95f + Mathf.Sin(Time.time * oscillationSpeed) * 0.15f;
     }
 }

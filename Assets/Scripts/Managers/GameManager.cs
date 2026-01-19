@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
     [Header("Debug")]
     [SerializeField] private bool startWith1kScore = false;
 
-    private bool gameover = false;
+    public bool gameover = false;
 
 
     private void Awake()
@@ -38,13 +38,20 @@ public class GameManager : MonoBehaviour
 
     }
 
-
+    private void Start()
+    {
+        scoreText = GameObject.Find("ScoreText").GetComponent<TMPro.TextMeshProUGUI>();
+    }
     private void Update()
     {
         if (!gameover)
         {
         Debug1kStart();
         UpdateUI();
+        }
+        if (gameover && (Input.GetKeyDown(KeyCode.Space)))
+        {
+        MenuManager.Instance.RestartGame();
         }
     }
 
@@ -83,6 +90,7 @@ public class GameManager : MonoBehaviour
     public void OnPlayerDead()
     {
         if (gameover) return;
+        Time.timeScale = 0f; // Pausar el juego
         gameover = true;
         DataManager.Instance.AddMoney(coinThisRun);
 
@@ -94,15 +102,8 @@ public class GameManager : MonoBehaviour
 
         MenuManager.Instance.ShowDeathMenu();
 
-        Time.timeScale = 0f; // Pausar el juego
-
     }
 
-    public void RestartGame()
-    {
-        Time.timeScale = 1f; // Reanudar el juego
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
 
 
 }

@@ -12,7 +12,7 @@ public class DataManager : MonoBehaviour
     public int money = 0;
     public int highScore = 0;
     public List<string> unlockedSkins = new List<string>();
-    public string selectedSkin = "default";
+    public string selectedSkin = "0";
 
 
 
@@ -36,6 +36,7 @@ public class DataManager : MonoBehaviour
         SaveData();
     }
 
+
     public void SaveData()
     {
         PlayerPrefs.SetInt("Money", money);
@@ -49,8 +50,17 @@ public class DataManager : MonoBehaviour
     {
         money = PlayerPrefs.GetInt("Money", 0);
         highScore = PlayerPrefs.GetInt("HighScore", 0);
-        selectedSkin = PlayerPrefs.GetString("SelectedSkin", "default");
+        selectedSkin = PlayerPrefs.GetString("SelectedSkin", "0");
         string unlockedSkinsString = PlayerPrefs.GetString("UnlockedSkins", "default");
         unlockedSkins = new List<string>(unlockedSkinsString.Split(','));
+    }
+
+    public void ResetData()
+    {
+        PlayerPrefs.DeleteAll();
+        money = 0;
+        highScore = 0;
+        selectedSkin = "0";
+        unlockedSkins = new List<string>();
     }
 }
