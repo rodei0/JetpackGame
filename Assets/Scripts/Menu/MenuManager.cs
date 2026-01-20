@@ -20,7 +20,6 @@ public class MenuManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -28,6 +27,7 @@ public class MenuManager : MonoBehaviour
         }
     }
 
+    
     public void ShowPauseMenu()
     {
         if (GameManager.Instance.gameover) return;

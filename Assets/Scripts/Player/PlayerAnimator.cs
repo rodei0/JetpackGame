@@ -10,7 +10,7 @@ public class PlayerAnimator : MonoBehaviour
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
-        //ApplySkin();
+        ApplySkin();
         pMovement = GetComponent<PlayerMovement>();
     }
 

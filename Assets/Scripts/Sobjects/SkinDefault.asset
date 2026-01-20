@@ -15,5 +15,6 @@ MonoBehaviour:
   skinId: 0
   skinName: Default
   skinSprite: {fileID: -4839600805504314895, guid: 41bdf685be6108943bfa5fe09e7b5059, type: 3}
+  animatorController: {fileID: 9100000, guid: a855e01a0fd2c5443aec4c5234926ab9, type: 2}
   unlockCost: 0
   isUnlocked: 1
