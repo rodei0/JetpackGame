@@ -51,8 +51,13 @@ public class DataManager : MonoBehaviour
         money = PlayerPrefs.GetInt("Money", 0);
         highScore = PlayerPrefs.GetInt("HighScore", 0);
         selectedSkin = PlayerPrefs.GetString("SelectedSkin", "0");
-        string unlockedSkinsString = PlayerPrefs.GetString("UnlockedSkins", "default");
+        string unlockedSkinsString = PlayerPrefs.GetString("UnlockedSkins", "0");
         unlockedSkins = new List<string>(unlockedSkinsString.Split(','));
+        if (!unlockedSkins.Contains("0"))
+        {
+            unlockedSkins.Add("0");
+            SaveData();
+        }
     }
 
     public void ResetData()
@@ -61,6 +66,7 @@ public class DataManager : MonoBehaviour
         money = 0;
         highScore = 0;
         selectedSkin = "0";
-        unlockedSkins = new List<string>();
+        unlockedSkins = new List<string> { "0" };
+        Debug.Log("Datos reseteados");
     }
 }
