@@ -16,5 +16,5 @@ MonoBehaviour:
   skinName: Test
   skinSprite: {fileID: 9027188466108551036, guid: 34fa644faa7e8d94abb9655b3713c998, type: 3}
   animatorController: {fileID: 9100000, guid: 83fb9e77233bb90419ced7679278c7b2, type: 2}
-  unlockCost: 0
+  unlockCost: 200
   isUnlocked: 1

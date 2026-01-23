@@ -14,7 +14,6 @@ public class PlayerAnimator : MonoBehaviour
         pMovement = GetComponent<PlayerMovement>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         RunAnimation();

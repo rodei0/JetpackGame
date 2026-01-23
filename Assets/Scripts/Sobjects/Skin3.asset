@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9525e6cafff9f2e4c98acf429df77389, type: 3}
+  m_Name: Skin3
+  m_EditorClassIdentifier: 
+  skinId: 3
+  skinName: Cigarro
+  skinSprite: {fileID: -7636170846477405445, guid: fb9cd43b34b43a145aee382aa865b5cc, type: 3}
+  animatorController: {fileID: 9100000, guid: 260835b818a40484088698d6ce8c50ef, type: 2}
+  unlockCost: 350
+  isUnlocked: 1

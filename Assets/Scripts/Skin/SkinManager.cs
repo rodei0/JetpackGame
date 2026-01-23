@@ -22,6 +22,7 @@ public class SkinManager : MonoBehaviour
         }
     }
 
+    
     private void Start()
     {
         LoadSelectedSkin();
@@ -30,6 +31,7 @@ public class SkinManager : MonoBehaviour
     private void LoadSelectedSkin()
     {
         currentSkin = skins.Find(skin => skin.skinId == DataManager.Instance.selectedSkin);
+        Debug.Log("Skin cargada: " + currentSkin.skinName);
     }
 
 
@@ -53,6 +55,7 @@ public class SkinManager : MonoBehaviour
 
     public Skin GetCurentSkin()
     {
+        Debug.Log("Skin actual: " + currentSkin.skinName);
         return currentSkin;
     }
 }
