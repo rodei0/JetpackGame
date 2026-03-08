@@ -7,7 +7,15 @@ public class MenuController : MonoBehaviour
     [SerializeField] private GameObject shopPanel;
     public void StartGame()
     {
-        SceneManager.LoadScene(0);  
+        SceneManager.LoadScene(1);  
+    }
+
+    private void Update()
+    {
+       if (shopPanel.activeSelf && Input.GetKeyDown(KeyCode.Escape)) 
+       {
+            CloseShop();
+       }
     }
 
     public void OpenShop() 

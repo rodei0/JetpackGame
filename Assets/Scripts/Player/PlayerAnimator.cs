@@ -1,33 +1,44 @@
 using UnityEngine;
-
+using FMOD.Studio;
 public class PlayerAnimator : MonoBehaviour
 {
+    private EventInstance playerFootsteps;
+
     private Animator animator;
     [SerializeField] private Transform groundDetect;
     private PlayerMovement pMovement;
     private SpriteRenderer spriteRenderer;
+
+    private bool isRunning = false;
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         ApplySkin();
         pMovement = GetComponent<PlayerMovement>();
+        playerFootsteps = AudioManager.Instance.CreateEventInstance(FMODEvents.Instance.footstepSFX);
     }
 
     void Update()
     {
         RunAnimation();
         FlyAnimation();
+        stopRunningSound();
     }
     
     void RunAnimation()
     {
         Collider2D groundCollider = Physics2D.OverlapCircle(groundDetect.position, 0.1f);
-        if (groundCollider != null && groundCollider.CompareTag("Ground"))
+        bool isGrounded = groundCollider != null && groundCollider.CompareTag("Ground");
+        if (isGrounded && !isRunning)
         {
             animator.SetBool("isRunning", true);
-        } else  {
+            playerFootsteps.start();
+            isRunning = true;
+        } else if (!isGrounded && isRunning) {
             animator.SetBool("isRunning", false);
+            playerFootsteps.stop(STOP_MODE.ALLOWFADEOUT);
+            isRunning = false;
         }
     }
 
@@ -39,6 +50,15 @@ public class PlayerAnimator : MonoBehaviour
         } else { 
             animator.SetBool("isFlyingUp", false);
             animator.SetBool("isFlyingDown", true);
+        }
+    }
+
+    void stopRunningSound()
+    {
+        if (MenuManager.Instance.isPaused || GameManager.Instance.gameover)
+        {
+        playerFootsteps.stop(STOP_MODE.ALLOWFADEOUT);     
+        isRunning = false;
         }
     }
 

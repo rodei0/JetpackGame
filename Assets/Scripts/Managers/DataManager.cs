@@ -34,6 +34,7 @@ public class DataManager : MonoBehaviour
     {
         money += coins;
         SaveData();
+        Debug.Log("Dinero añadido: " + coins + ". Dinero total: " + money);
     }
 
 
@@ -68,5 +69,6 @@ public class DataManager : MonoBehaviour
         selectedSkin = "0";
         unlockedSkins = new List<string> { "0" };
         Debug.Log("Datos reseteados");
+
     }
 }

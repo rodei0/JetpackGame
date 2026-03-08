@@ -11,11 +11,13 @@ public class SkinButton : MonoBehaviour
     [SerializeField] private Sprite equippedSprite;
     [SerializeField] private Sprite equipSprite;
     [SerializeField] private Sprite unlockSprite;
+    [SerializeField] private TMPro.TextMeshProUGUI costText;
 
     private void Start()
     {
         UpdateButtonImage();
         UpdateSkinImage();
+        TextPrice();
     }
 
     public void OnButtonPressed()
@@ -44,6 +46,7 @@ public class SkinButton : MonoBehaviour
         else if (DataManager.Instance.unlockedSkins.Contains(skin.skinId))
         {
             buttonImage.sprite = equipSprite;
+            TextPrice();
         }
         else
         {
@@ -61,6 +64,19 @@ public class SkinButton : MonoBehaviour
         } else
         {
             skinImage.sprite = LockedSprite;
+        }
+    }
+
+    private void TextPrice()
+    {
+        if (skin == null) return;
+        if (DataManager.Instance.unlockedSkins.Contains(skin.skinId))
+        {
+            costText.text = "";
+        }
+        else
+        {
+            costText.text = skin.unlockCost.ToString();
         }
     }
 }

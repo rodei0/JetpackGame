@@ -49,7 +49,8 @@ public class MenuManager : MonoBehaviour
     {
         Time.timeScale = 1f; // Reanudar el juego
         isPaused = false;
-        SceneManager.LoadScene(1);
+        DataManager.Instance.AddMoney(GameManager.Instance.coinThisRun);
+        SceneManager.LoadScene(0);
         DeathPanel.SetActive(false);
     }
 

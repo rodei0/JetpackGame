@@ -1,5 +1,4 @@
 using UnityEngine;
-
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Player variables")] 
@@ -8,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rb;
     public bool isFlying;
     public bool isDead;
+    private float intensity = 0f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
@@ -21,7 +21,9 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         isFlying = Input.GetKey(KeyCode.Space);
+
         PauseGame();
+        UpdateJetpackIntensity();
     }
 
     private void FixedUpdate()
@@ -37,6 +39,27 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    private void UpdateJetpackIntensity() 
+    {
+        if ((MenuManager.Instance != null && MenuManager.Instance.isPaused) || isDead)
+        {
+            intensity = 0f;
+            AudioManager.Instance.SetJetpackParameter("jetpack_intensity", 0f);
+            return;
+        }
+
+        if (isFlying && intensity < 1)
+        {
+            intensity += 0.01f;
+            Debug.Log("Flying - Intensity: " + intensity);
+        } else if (intensity > 0f)
+        {
+            intensity -= 0.1f;
+        }
+
+        AudioManager.Instance.SetJetpackParameter("jetpack_intensity", intensity);
+    }
+
     private void FlyMovement()
     {
         rb.AddForce(new Vector2(0, flyingPower), ForceMode2D.Force);
@@ -46,9 +69,11 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape) && !MenuManager.Instance.isPaused)
         {
-        MenuManager.Instance.ShowPauseMenu();   
+        AudioManager.Instance.SetJetpackParameter("jetpack_intensity", 0f);
+        MenuManager.Instance.ShowPauseMenu();
         } else if (Input.GetKeyDown(KeyCode.Escape) && MenuManager.Instance.isPaused)
         {
+        Time.timeScale = 1f;
         MenuManager.Instance.Resume();
         }
     }
@@ -58,6 +83,9 @@ public class PlayerMovement : MonoBehaviour
         if (collision.gameObject.CompareTag("Obstacle"))
         {
             Debug.Log("Player hit an obstacle!");
+            isDead = true;
+            intensity = 0f;
+            AudioManager.Instance.SetJetpackParameter("jetpack_intensity", 0f);
             GameManager.Instance.OnPlayerDead();
         }
     }
@@ -67,6 +95,7 @@ public class PlayerMovement : MonoBehaviour
         if (collision.gameObject.CompareTag("Coin"))
         {
             GameManager.Instance.AddCoin();
+            AudioManager.Instance.PlayOneShot(FMODEvents.Instance.coinCollectSFX, transform.position);
             Destroy(collision.gameObject);
         }
     }

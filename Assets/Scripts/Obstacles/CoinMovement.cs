@@ -13,7 +13,7 @@ public class CoinMovement : MonoBehaviour
 
     void OscileUpAndDown() 
     {
-        this.transform.position = new Vector2(this.transform.position.x, this.transform.position.y + Mathf.Sin(Time.time) * 0.0005f);
+        this.transform.position = new Vector2(this.transform.position.x, this.transform.position.y + Mathf.Sin(Time.time) * 0.5f * Time.deltaTime);
     }
 
     void rotateYConstantly()

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="ParameterPreset" id="{6431e006-65e4-4cb2-81b6-fd1832d3b3b4}">
+		<property name="name">
+			<value>jetpack_intensity</value>
+		</property>
+		<relationship name="folder">
+			<destination>{d1a540c9-5d5b-4a1d-9fdd-49cab5bfacf8}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{d5159c61-df14-44d4-9ab4-fb5a3972033e}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{d5159c61-df14-44d4-9ab4-fb5a3972033e}">
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+	</object>
+</objects>

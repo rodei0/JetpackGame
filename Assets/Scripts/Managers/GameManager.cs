@@ -13,11 +13,13 @@ public class GameManager : MonoBehaviour
 
     [Header("Score")]
     public float score = 0f;
-    private int coinThisRun = 0;
+    public int coinThisRun = 0;
     private float timePassed = 0f;
 
     [Header("UI")]
     [SerializeField] private TMPro.TextMeshProUGUI scoreText;
+    [SerializeField] private TMPro.TextMeshProUGUI totalCoins;
+    [SerializeField] private TMPro.TextMeshProUGUI highscoreText;
 
     [Header("Debug")]
     [SerializeField] private bool startWith1kScore = false;
@@ -41,6 +43,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         scoreText = GameObject.Find("ScoreText").GetComponent<TMPro.TextMeshProUGUI>();
+        UpdateCoinUI();
     }
     private void Update()
     {
@@ -81,11 +84,18 @@ public class GameManager : MonoBehaviour
     public void UpdateUI()
     {
         scoreText.text = "Score: " + Mathf.FloorToInt(score).ToString();
+        
     }
 
     public void AddCoin()
     {
-        coinThisRun++;
+        coinThisRun++;  
+        UpdateCoinUI();
+    }
+
+    private void UpdateCoinUI()
+    {
+        totalCoins.text = (DataManager.Instance.money + coinThisRun).ToString();
     }
     public void OnPlayerDead()
     {
@@ -93,11 +103,13 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0f; // Pausar el juego
         gameover = true;
         DataManager.Instance.AddMoney(coinThisRun);
+        highscoreText.text = "High score: " + DataManager.Instance.highScore.ToString();
 
         if (score > DataManager.Instance.highScore)
         {
             DataManager.Instance.highScore = Mathf.FloorToInt(score);
             DataManager.Instance.SaveData();
+            highscoreText.text = "High score: " + DataManager.Instance.highScore.ToString();
         }
 
         MenuManager.Instance.ShowDeathMenu();

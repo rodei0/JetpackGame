@@ -2,11 +2,13 @@ using System;
 using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SkinManager : MonoBehaviour
 {
     public static SkinManager Instance { get; private set; }
     [SerializeField] private List<Skin> skins;
+    [SerializeField] private TMPro.TextMeshProUGUI coinText;
     private Skin currentSkin;
 
     private void Awake()
@@ -15,6 +17,7 @@ public class SkinManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+            SceneManager.sceneLoaded += OnSceneLoaded;
         }
         else
         {
@@ -25,7 +28,21 @@ public class SkinManager : MonoBehaviour
     
     private void Start()
     {
-        LoadSelectedSkin();
+        //coinText = GameObject.Find("CoinText").GetComponent<TMPro.TextMeshProUGUI>();
+        //ChangeCoinText();
+        //LoadSelectedSkin();
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        GameObject coinTextObj = GameObject.FindWithTag("CoinText");
+
+        if (coinTextObj != null)
+        {
+            coinText = coinTextObj.GetComponent<TMPro.TextMeshProUGUI>();
+            ChangeCoinText();
+            LoadSelectedSkin();
+        }
     }
 
     private void LoadSelectedSkin()
@@ -37,8 +54,10 @@ public class SkinManager : MonoBehaviour
 
     public void UnlockSkin(Skin skin)
     {
-        if (!DataManager.Instance.unlockedSkins.Contains(skin.skinId))
+        if (!DataManager.Instance.unlockedSkins.Contains(skin.skinId) && DataManager.Instance.money >= skin.unlockCost)
         {
+            DataManager.Instance.money -= skin.unlockCost;
+            ChangeCoinText();
             DataManager.Instance.unlockedSkins.Add(skin.skinId);
             skin.isUnlocked = true;
             DataManager.Instance.SaveData();
@@ -55,7 +74,25 @@ public class SkinManager : MonoBehaviour
 
     public Skin GetCurentSkin()
     {
+        if (currentSkin == null)
+        {
+            currentSkin = skins.Find(skin => skin.skinId == "0");
+        }
         Debug.Log("Skin actual: " + currentSkin.skinName);
         return currentSkin;
+    }
+
+
+    public void ChangeCoinText()
+    {
+        coinText.text = DataManager.Instance.money.ToString();
+    }
+
+    public void ResetIsUnlockedSkins()
+    {
+        foreach (var skin in skins)
+        {
+            skin.isUnlocked = false;
+        }
     }
 }

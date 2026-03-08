@@ -131,7 +131,6 @@ public class SpawnerController : MonoBehaviour
             case 2:
                 if (GameManager.Instance.score >= 1000)
                 {
-                    StartCoroutine(SpawnMissileRoutine());
                     StartCoroutine(SpawnLaserRoutine());
                 } 
                 else
