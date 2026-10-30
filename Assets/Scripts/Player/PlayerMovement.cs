@@ -67,11 +67,11 @@ public class PlayerMovement : MonoBehaviour
 
     private void PauseGame()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && !MenuManager.Instance.isPaused)
+        if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P)) && !MenuManager.Instance.isPaused)
         {
         AudioManager.Instance.SetJetpackParameter("jetpack_intensity", 0f);
         MenuManager.Instance.ShowPauseMenu();
-        } else if (Input.GetKeyDown(KeyCode.Escape) && MenuManager.Instance.isPaused)
+        } else if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P)) && MenuManager.Instance.isPaused)
         {
         Time.timeScale = 1f;
         MenuManager.Instance.Resume();

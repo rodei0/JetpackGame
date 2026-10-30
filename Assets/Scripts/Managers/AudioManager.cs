@@ -22,21 +22,19 @@ public class AudioManager : MonoBehaviour
     private EventInstance jetpackInstance;
     private EventInstance musicInstance;
 
+    bool musicStarted = false;
+
     private void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
         else
         {
             Destroy(gameObject);
         }
 
-        masterBus = RuntimeManager.GetBus("bus:/");
-        musicBus = RuntimeManager.GetBus("bus:/Music");
-        sfxBus = RuntimeManager.GetBus("bus:/SFX");
     }
 
     private void Update()
@@ -44,11 +42,19 @@ public class AudioManager : MonoBehaviour
         masterBus.setVolume(masterVolume);
         musicBus.setVolume(musicVolume);
         sfxBus.setVolume(sfxVolume);
+
+        if (!musicStarted && Input.anyKeyDown)
+        {
+            InitializeMusic(FMODEvents.Instance.musicSFX);
+            musicStarted = true;
+        }
     }
     private void Start()
     {
+        masterBus = RuntimeManager.GetBus("bus:/");
+        musicBus = RuntimeManager.GetBus("bus:/Music");
+        sfxBus = RuntimeManager.GetBus("bus:/SFX");
         InitializeJetpack(FMODEvents.Instance.jetpackSFX);
-        InitializeMusic(FMODEvents.Instance.musicSFX);
     }
 
     public void PlayOneShot(EventReference sound, Vector3 position)
